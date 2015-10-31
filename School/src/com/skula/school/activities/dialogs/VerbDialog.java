@@ -1,5 +1,6 @@
 package com.skula.school.activities.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.skula.school.R;
 import com.skula.school.services.DatabaseService;
 
@@ -31,27 +31,28 @@ public class VerbDialog extends Dialog implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.word_dial_layout);
+		setContentView(R.layout.verb_dial_layout);
 
 		infinitive = (EditText) findViewById(R.id.verb_dial_infinitive);
 		present = (EditText) findViewById(R.id.verb_dial_present);
 		preterite = (EditText) findViewById(R.id.verb_dial_preterite);
 		perfect = (EditText) findViewById(R.id.verb_dial_perfect);
-		translation = (EditText) findViewById(R.id.word_dial_translation);
+		translation = (EditText) findViewById(R.id.verb_dial_translation);
 
-		btnCancel = (Button) findViewById(R.id.word_dial_btn_cancel);
+		btnCancel = (Button) findViewById(R.id.verb_dial_btn_cancel);
 		btnCancel.setOnClickListener(this);
-		btnSave = (Button) findViewById(R.id.word_dial_btn_save);
+		btnSave = (Button) findViewById(R.id.verb_dial_btn_save);
 		btnSave.setOnClickListener(this);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.word_dial_btn_cancel:
+		case R.id.verb_dial_btn_cancel:
 			dismiss();
 			break;
-		case R.id.word_dial_btn_save:
+		case R.id.verb_dial_btn_save:
 			String i = infinitive.getText().toString();
 			String pres = present.getText().toString();
 			String pret = preterite.getText().toString();

@@ -1,7 +1,6 @@
 package com.skula.school.services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -41,9 +40,9 @@ public class DatabaseService {
 
 		insertVerbGer(Verb.VERBS.get(0));
 		insertWordGer("prout", "plop");
-		/*for (Verb v : Verb.VERBS) {
-			insertVerbGer(v);
-		}*/
+		/*
+		 * for (Verb v : Verb.VERBS) { insertVerbGer(v); }
+		 */
 	}
 
 	public void insertVerbGer(Verb v) {
@@ -77,7 +76,7 @@ public class DatabaseService {
 	}
 
 	public void deleteVerbGer(String id) {
-		database.delete(TABLE_NAME_VERB_GERMAN, "id='"+id+"'", null);
+		database.delete(TABLE_NAME_VERB_GERMAN, "id='" + id + "'", null);
 	}
 
 	public Verb getVerbGer(String id) {
@@ -144,12 +143,12 @@ public class DatabaseService {
 	}
 
 	public void deleteWordGer(String id) {
-		database.delete(TABLE_NAME_WORD_GERMAN, "id='"+id+"'", null);
+		database.delete(TABLE_NAME_WORD_GERMAN, "id='" + id + "'", null);
 	}
-	
+
 	public Word getWordGer(String id) {
-		Cursor cursor = database.query(TABLE_NAME_WORD_GERMAN, new String[] { "id, word, translation" }, "id='" + id + "'",
-				null, null, null, null);
+		Cursor cursor = database.query(TABLE_NAME_WORD_GERMAN, new String[] { "id, word, translation" }, "id='" + id
+				+ "'", null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				return new Word(cursor.getString(0), cursor.getString(1), cursor.getString(2));

@@ -46,7 +46,7 @@ public class VerbActivity extends Activity {
 		this.vPerfect = (TextView) findViewById(R.id.vperfect);
 
 		this.dbs = new DatabaseService(this);
-		this.dbs.bouchon();
+		//this.dbs.bouchon();
 
 		nextVerb();
 		this.displayed = false;
@@ -118,6 +118,8 @@ public class VerbActivity extends Activity {
 			return true;
 		case R.id.remove:
 			dbs.deleteVerbGer(vId.getText().toString());
+			this.ids = null;
+			nextVerb();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.skula.school.R;
-import com.skula.school.activities.dialogs.VerbDialog;
+import com.skula.school.activities.dialogs.WordDialog;
 import com.skula.school.models.Word;
 import com.skula.school.services.DatabaseService;
 
@@ -65,11 +65,11 @@ public class WordActivity extends Activity {
 			Collections.shuffle(ids);
 		}
 		Word w = null;
-try{
-		 w = dbs.getWordGer(String.valueOf(ids.remove(0)));
-}catch(Exception e){
-	e.getMessage();
-}
+		try {
+			w = dbs.getWordGer(String.valueOf(ids.remove(0)));
+		} catch (Exception e) {
+			e.getMessage();
+		}
 		id.setText(w.getId());
 		id.setVisibility(View.GONE);
 		translation.setText(w.getTranslation());
@@ -101,11 +101,13 @@ try{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.add:
-			VerbDialog ad = new VerbDialog(this, dbs);
+			WordDialog ad = new WordDialog(this, dbs);
 			ad.show();
 			return true;
 		case R.id.remove:
 			dbs.deleteWordGer(id.getText().toString());
+			this.ids = null;
+			nextWord();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
