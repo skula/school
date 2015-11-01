@@ -7,16 +7,17 @@
 		
     <Button
         android:id="@+id/btn_verben"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_gravity="center_horizontal"
-        android:text="Verbes" />
+        android:text="Verbes irreguliers allemands" />
 
     <Button
         android:id="@+id/btn_words"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Mots" />
+        android:text="Vocabulaire allemand" />
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.skula.school.activities;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -72,14 +73,22 @@ public class WordActivity extends Activity {
 		}
 		id.setText(w.getId());
 		id.setVisibility(View.GONE);
-		translation.setText(w.getTranslation());
-		translation.setVisibility(View.VISIBLE);
-		word.setText(w.getWord());
-		word.setVisibility(View.GONE);
+		
+		Random r = new Random();
+		if(r.nextInt(10)%2 == 0){
+			translation.setText(w.getTranslation());
+			word.setText(w.getWord());
+		}else{
+			translation.setText(w.getWord());
+			word.setText(w.getTranslation());
+		}
+		word.setVisibility(View.VISIBLE);
+		translation.setVisibility(View.GONE);
 	}
 
 	private void displayTranslation() {
 		word.setVisibility(View.VISIBLE);
+		translation.setVisibility(View.VISIBLE);
 	}
 
 	public boolean isDisplayed() {
