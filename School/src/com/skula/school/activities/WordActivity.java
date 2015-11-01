@@ -40,7 +40,7 @@ public class WordActivity extends Activity {
 		this.word = (TextView) findViewById(R.id.wWord);
 
 		this.dbs = new DatabaseService(this);
-		this.dbs.bouchon();
+		//this.dbs.bouchon();
 
 		nextWord();
 		this.displayed = false;

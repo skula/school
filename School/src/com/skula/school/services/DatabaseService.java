@@ -39,7 +39,7 @@ public class DatabaseService {
 				+ "(id integer PRIMARY KEY, word TEXT, translation TEXT)");
 
 		insertVerbGer(Verb.VERBS.get(0));
-		insertWordGer("prout", "plop");
+		insertWordGer("der Frühling", "le printemps");
 		/*
 		 * for (Verb v : Verb.VERBS) { insertVerbGer(v); }
 		 */
