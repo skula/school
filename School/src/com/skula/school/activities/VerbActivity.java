@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +19,10 @@ import com.skula.school.models.Verb;
 import com.skula.school.services.DatabaseService;
 
 public class VerbActivity extends Activity {
+	private static final int CLICK_WORD = 0;
+	private static final int CLICK_TRANSLATE = 1;
+	private static final int CLICK_CONJ = 2;
+
 	private TextView vId;
 	private TextView vTranslation;
 	private TextView vInfinitive;
@@ -30,7 +33,7 @@ public class VerbActivity extends Activity {
 	private DatabaseService dbs;
 	private List<Integer> ids;
 
-	private boolean displayed;
+	private int clickType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +49,32 @@ public class VerbActivity extends Activity {
 		this.vPerfect = (TextView) findViewById(R.id.vperfect);
 
 		this.dbs = new DatabaseService(this);
-		//this.dbs.bouchon();
+		// this.dbs.bouchon();
 
 		nextVerb();
-		this.displayed = false;
+		this.clickType = CLICK_WORD;
 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout);
 		layout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (isDisplayed()) {
+				switch (clickType) {
+				case CLICK_WORD:
+					clickType = CLICK_TRANSLATE;
+					vInfinitive.setVisibility(View.VISIBLE);
+					break;
+				case CLICK_TRANSLATE:
+					clickType = CLICK_CONJ;
+					vPresent.setVisibility(View.VISIBLE);
+					vPreterite.setVisibility(View.VISIBLE);
+					vPerfect.setVisibility(View.VISIBLE);
+					break;
+				case CLICK_CONJ:
+					clickType = CLICK_WORD;
 					nextVerb();
-					setDisplayed(false);
-				} else {
-					displayConjugation();
-					setDisplayed(true);
+					break;
+				default:
+					break;
 				}
 			}
 		});
@@ -84,22 +98,6 @@ public class VerbActivity extends Activity {
 		vPreterite.setVisibility(View.GONE);
 		vPerfect.setText(v.getPerfect());
 		vPerfect.setVisibility(View.GONE);
-	}
-
-	private void displayConjugation() {
-		vInfinitive.setVisibility(View.VISIBLE);
-		vTranslation.setVisibility(View.VISIBLE);
-		vPresent.setVisibility(View.VISIBLE);
-		vPreterite.setVisibility(View.VISIBLE);
-		vPerfect.setVisibility(View.VISIBLE);
-	}
-
-	public boolean isDisplayed() {
-		return displayed;
-	}
-
-	public void setDisplayed(boolean displayed) {
-		this.displayed = displayed;
 	}
 
 	@Override
