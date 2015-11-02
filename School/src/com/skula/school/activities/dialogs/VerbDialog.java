@@ -9,7 +9,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.skula.school.R;
+import com.skula.school.models.Verb;
 import com.skula.school.services.DatabaseService;
 
 public class VerbDialog extends Dialog implements OnClickListener {
@@ -21,10 +23,18 @@ public class VerbDialog extends Dialog implements OnClickListener {
 	private EditText preterite;
 	private EditText perfect;
 	private EditText translation;
+	private Verb verb;
 
 	public VerbDialog(Activity parentActivity, DatabaseService dbs) {
 		super(parentActivity);
 		this.dbs = dbs;
+		this.verb = null;
+	}
+	
+	public VerbDialog(Activity parentActivity, DatabaseService dbs, Verb verb) {
+		super(parentActivity);
+		this.dbs = dbs;
+		this.verb = verb;
 	}
 
 	@Override
@@ -43,6 +53,17 @@ public class VerbDialog extends Dialog implements OnClickListener {
 		btnCancel.setOnClickListener(this);
 		btnSave = (Button) findViewById(R.id.verb_dial_btn_save);
 		btnSave.setOnClickListener(this);
+		
+		if(verb == null){
+			btnSave.setText("Ajouter");
+		}else{
+			btnSave.setText("Modifier");
+			infinitive.setText(verb.getInfinitive());
+			present.setText(verb.getPresent());
+			preterite.setText(verb.getPreterite());
+			perfect.setText(verb.getPerfect());
+			translation.setText(verb.getTranslation());
+		}
 	}
 
 	@SuppressLint("NewApi")
@@ -59,7 +80,11 @@ public class VerbDialog extends Dialog implements OnClickListener {
 			String perf = perfect.getText().toString();
 			String t = translation.getText().toString();
 			if (!i.isEmpty() && !pres.isEmpty() && !pret.isEmpty() && !perf.isEmpty() && !t.isEmpty()) {
-				dbs.insertVerbGer(i, pres, pret, perf, t);
+				if(verb == null){
+					dbs.insertVerbGer(i, pres, pret, perf, t);
+				}else{
+					dbs.updateVerbGer(verb.getId(), i, pres, pret, perf, t);
+				}
 			}
 			dismiss();
 			break;

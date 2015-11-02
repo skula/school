@@ -3,6 +3,7 @@ package com.skula.school.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -70,6 +71,16 @@ public class DatabaseService {
 		statement.bindString(6, translation);
 		statement.executeInsert();
 	}
+	
+	public void updateVerbGer(String id, String infinitive, String present, String preterite, String perfect, String translation) {
+		ContentValues args = new ContentValues();
+		args.put("infinitive", infinitive);
+		args.put("present", present);
+		args.put("preterite", preterite);
+		args.put("perfect", perfect);
+		args.put("translation", translation);
+		database.update(TABLE_NAME_VERB_GERMAN, args, "id=" + id, null);
+	}
 
 	public void deleteAllVerbsGer() {
 		database.delete(TABLE_NAME_VERB_GERMAN, null, null);
@@ -136,6 +147,13 @@ public class DatabaseService {
 		statement.bindString(2, word);
 		statement.bindString(3, translation);
 		statement.executeInsert();
+	}
+	
+	public void updateWordGer(String id, String word, String translation) {
+		ContentValues args = new ContentValues();
+		args.put("word", word);
+		args.put("translation", translation);
+		database.update(TABLE_NAME_WORD_GERMAN, args, "id=" + id, null);
 	}
 
 	public void deleteAllWordsGer() {

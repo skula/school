@@ -108,9 +108,14 @@ public class WordActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		WordDialog ad;
 		switch (item.getItemId()) {
 		case R.id.add:
-			WordDialog ad = new WordDialog(this, dbs);
+			ad = new WordDialog(this, dbs);
+			ad.show();
+			return true;
+		case R.id.modify:
+			ad = new WordDialog(this, dbs, dbs.getWordGer(id.getText().toString()));
 			ad.show();
 			return true;
 		case R.id.remove:

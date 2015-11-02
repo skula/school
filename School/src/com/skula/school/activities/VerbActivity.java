@@ -109,9 +109,14 @@ public class VerbActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		VerbDialog ad;
 		switch (item.getItemId()) {
 		case R.id.add:
-			VerbDialog ad = new VerbDialog(this, dbs);
+			ad = new VerbDialog(this, dbs);
+			ad.show();
+			return true;
+		case R.id.modify:
+			ad = new VerbDialog(this, dbs, dbs.getVerbGer(vId.getText().toString()));
 			ad.show();
 			return true;
 		case R.id.remove:
