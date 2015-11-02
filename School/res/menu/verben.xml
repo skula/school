@@ -13,5 +13,9 @@
         android:id="@+id/remove"
         android:showAsAction="withText"
         android:title="Supprimer"/>
+    <item
+        android:id="@+id/export"
+        android:showAsAction="withText"
+        android:title="Exporter"/>
 
 </menu>

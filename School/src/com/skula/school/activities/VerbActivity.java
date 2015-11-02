@@ -1,10 +1,14 @@
 package com.skula.school.activities;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,7 +53,7 @@ public class VerbActivity extends Activity {
 		this.vPerfect = (TextView) findViewById(R.id.vperfect);
 
 		this.dbs = new DatabaseService(this);
-		//this.dbs.bouchon();
+		// this.dbs.bouchon();
 
 		nextVerb();
 		this.clickType = CLICK_WORD;
@@ -123,6 +127,28 @@ public class VerbActivity extends Activity {
 			dbs.deleteVerbGer(vId.getText().toString());
 			this.ids = null;
 			nextVerb();
+			return true;
+		case R.id.export:
+			File myFile = new File(Environment.getExternalStorageDirectory() + File.separator + "appli_test", "testAppli.txt");
+			File myDir = new File(Environment.getExternalStorageDirectory() + File.separator + "appli_test"); 
+			Boolean success = true;
+			if (!myDir.exists()) {
+				success = myDir.mkdir(); 
+			}
+			if (success) {
+
+				String data = "Ce que je veux ecrire dans mon fichier \r\n";
+
+				FileOutputStream output;
+				try {
+					output = new FileOutputStream(myFile, true);
+					output.write(data.getBytes());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			}
+			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
