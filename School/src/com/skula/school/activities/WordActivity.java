@@ -18,6 +18,7 @@ import com.skula.school.R;
 import com.skula.school.activities.dialogs.WordDialog;
 import com.skula.school.models.Word;
 import com.skula.school.services.DatabaseService;
+import com.skula.school.utils.FileCreator;
 
 public class WordActivity extends Activity {
 	private TextView id;
@@ -122,6 +123,9 @@ public class WordActivity extends Activity {
 			dbs.deleteWordGer(id.getText().toString());
 			this.ids = null;
 			nextWord();
+			return true;
+		case R.id.export:
+			FileCreator.writeFile("wordsGer", dbs.exportWordsGer());			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -125,6 +125,26 @@ public class DatabaseService {
 		}
 		return res;
 	}
+	
+	public List<List<String>> exportVerbGer() {
+		List<List<String>> res = new ArrayList<List<String>>();
+		Cursor cursor = database.query(TABLE_NAME_VERB_GERMAN,
+				new String[] { "id, infinitive, present, preterite, perfect, translation" }, null, null,
+				null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				List<String> line= new ArrayList<String>();
+				for(int i = 0; i<6; i++){
+					line.add(cursor.getString(i));
+				}
+				res.add(line);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return res;
+	}
 
 	public int getNextVerbGerId() {
 		Cursor cursor = database
@@ -192,6 +212,26 @@ public class DatabaseService {
 		return res;
 	}
 
+	public List<List<String>> exportWordsGer() {
+		List<List<String>> res = new ArrayList<List<String>>();
+		Cursor cursor = database.query(TABLE_NAME_WORD_GERMAN,
+				new String[] { "id, word, translation" }, null, null,
+				null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				List<String> line= new ArrayList<String>();
+				for(int i = 0; i<3; i++){
+					line.add(cursor.getString(i));
+				}
+				res.add(line);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return res;
+	}
+	
 	public int getNextWordGerId() {
 		Cursor cursor = database
 				.query(TABLE_NAME_WORD_GERMAN, new String[] { "max(id)" }, null, null, null, null, null);

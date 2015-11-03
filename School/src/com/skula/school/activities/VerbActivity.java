@@ -21,6 +21,7 @@ import com.skula.school.R;
 import com.skula.school.activities.dialogs.VerbDialog;
 import com.skula.school.models.Verb;
 import com.skula.school.services.DatabaseService;
+import com.skula.school.utils.FileCreator;
 
 public class VerbActivity extends Activity {
 	private static final int CLICK_WORD = 0;
@@ -129,26 +130,7 @@ public class VerbActivity extends Activity {
 			nextVerb();
 			return true;
 		case R.id.export:
-			File myFile = new File(Environment.getExternalStorageDirectory() + File.separator + "appli_test", "testAppli.txt");
-			File myDir = new File(Environment.getExternalStorageDirectory() + File.separator + "appli_test"); 
-			Boolean success = true;
-			if (!myDir.exists()) {
-				success = myDir.mkdir(); 
-			}
-			if (success) {
-
-				String data = "Ce que je veux ecrire dans mon fichier \r\n";
-
-				FileOutputStream output;
-				try {
-					output = new FileOutputStream(myFile, true);
-					output.write(data.getBytes());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-			}
-			
+			FileCreator.writeFile("verbsGer", dbs.exportVerbGer());			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
