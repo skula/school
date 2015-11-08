@@ -46,7 +46,7 @@ public class WordDialog extends Dialog implements OnClickListener {
 		btnSave = (Button) findViewById(R.id.word_dial_btn_save);
 		btnSave.setOnClickListener(this);
 		
-		if(word==null){
+		if(w==null){
 			btnSave.setText("Ajouter");
 		}else{
 			btnSave.setText("Modifier");

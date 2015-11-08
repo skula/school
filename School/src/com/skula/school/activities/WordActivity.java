@@ -112,8 +112,12 @@ public class WordActivity extends Activity {
 		WordDialog ad;
 		switch (item.getItemId()) {
 		case R.id.add:
+			try{
 			ad = new WordDialog(this, dbs);
 			ad.show();
+			}catch(Exception e){
+				e.getMessage();
+			}
 			return true;
 		case R.id.modify:
 			ad = new WordDialog(this, dbs, dbs.getWordGer(id.getText().toString()));
