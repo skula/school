@@ -16,15 +16,15 @@ public class Verb {
 		int cpt = 1;
 		VERBS = new ArrayList<Verb>();
 		VERBS.add(new Verb(String.valueOf(cpt++), "anbieten", "bietet an", "bot an", "hat angeboten", "offrir, proposer"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "anfangen", "fÃ¤ngt an", "fing an", "hat angefangen", "commencer"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "anziehen", "zieht an", "zog an", "hat angezogen", "mettre (vÃªtement)"));
+		VERBS.add(new Verb(String.valueOf(cpt++), "anfangen", "fängt an", "fing an", "hat angefangen", "commencer"));
+		VERBS.add(new Verb(String.valueOf(cpt++), "anziehen", "zieht an", "zog an", "hat angezogen", "mettre (vêtement)"));
 		VERBS.add(new Verb(String.valueOf(cpt++), "aufgeben", "gibt auf", "gab auf", "hat aufgegeben", "abandonner"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "ausblasen", "blÃ¤st aus", "blies aus", "hat ausgeblasen", "souffler (bougie)"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "ausgeben", "gibt aus", "gab aus", "hat ausgegeben", "dÃ©penser (argent)"));
+		VERBS.add(new Verb(String.valueOf(cpt++), "ausblasen", "bläst aus", "blies aus", "hat ausgeblasen", "souffler (bougie)"));
+		VERBS.add(new Verb(String.valueOf(cpt++), "ausgeben", "gibt aus", "gab aus", "hat ausgegeben", "dépenser (argent)"));
 		VERBS.add(new Verb(String.valueOf(cpt++), "aussehen", "sieht aus", "sah aus", "hat ausgesehen", "avoir l'air"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "ausziehen", "zieht aus", "zog aus", "hat ausgezogen", "enlever (vÃªtement)"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "ausziehen", "zieht aus", "zog aus", "ist ausgezogen", "dÃ©mÃ©nager"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "backen", "bÃ¤ckt", "backte / buk", "hat gebacken", "faire cuire au four(pÃ¢tisserie)"));
+		VERBS.add(new Verb(String.valueOf(cpt++), "ausziehen", "zieht aus", "zog aus", "hat ausgezogen", "enlever (vêtement)"));
+		VERBS.add(new Verb(String.valueOf(cpt++), "ausziehen", "zieht aus", "zog aus", "ist ausgezogen", "déménager"));
+		VERBS.add(new Verb(String.valueOf(cpt++), "backen", "bäckt", "backte / buk", "hat gebacken", "faire cuire au four(pâtisserie)"));
 	}
 
 	public Verb() {

@@ -35,22 +35,22 @@ public class DatabaseService {
 				+ TABLE_NAME_VERB_GERMAN
 				+ "(id integer PRIMARY KEY, infinitive TEXT, present TEXT, preterite TEXT, perfect TEXT, translation TEXT)");
 
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_WORD_GERMAN);
+		/*database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_WORD_GERMAN);
 		database.execSQL("CREATE TABLE " + TABLE_NAME_WORD_GERMAN
 				+ "(id integer PRIMARY KEY, word TEXT, translation TEXT)");
-
-		insertVerbGer(Verb.VERBS.get(0));
-		insertWordGer("der Frühling", "le printemps");
-		/*
-		 * for (Verb v : Verb.VERBS) { insertVerbGer(v); }
-		 */
+*/
+		//insertVerbGer(Verb.VERBS.get(0));
+		
+		
+		  for (Verb v : Verb.VERBS) { insertVerbGer(v); }
+		 
 	}
 
 	public void insertVerbGer(Verb v) {
 		String sql = "insert into " + TABLE_NAME_VERB_GERMAN
 				+ "(id, infinitive, present, preterite, perfect, translation) values (?,?,?,?,?,?)";
 		statement = database.compileStatement(sql);
-		statement.bindString(1, v.getId());
+		statement.bindString(1, String.valueOf(getNextVerbGerId()));
 		statement.bindString(2, v.getInfinitive());
 		statement.bindString(3, v.getPresent());
 		statement.bindString(4, v.getPreterite());

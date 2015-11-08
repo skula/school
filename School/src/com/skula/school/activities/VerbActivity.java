@@ -54,7 +54,7 @@ public class VerbActivity extends Activity {
 		this.vPerfect = (TextView) findViewById(R.id.vperfect);
 
 		this.dbs = new DatabaseService(this);
-		// this.dbs.bouchon();
+		//this.dbs.bouchon();
 
 		nextVerb();
 		this.clickType = CLICK_WORD;
