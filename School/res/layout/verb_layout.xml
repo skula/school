@@ -4,21 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-	   <TextView
+
+    <TextView
         android:id="@+id/vid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="25sp" />
-		
+
+    <TextView
+        android:id="@+id/vcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|end"
+        android:layout_marginRight="5dp"
+        android:textSize="15sp" />
+
     <TextView
         android:id="@+id/vtranslation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:textSize="25sp"
-        android:textColor="#ad3030" />
+        android:layout_marginTop="20dp"
+        android:textColor="#ad3030"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/vinfinitive"
@@ -26,8 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:textSize="25sp" 
-        android:textColor="#18ac18" />
+        android:textColor="#18ac18"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/vpresent"

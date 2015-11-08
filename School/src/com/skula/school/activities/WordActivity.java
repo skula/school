@@ -24,11 +24,14 @@ public class WordActivity extends Activity {
 	private TextView id;
 	private TextView translation;
 	private TextView word;
+	private TextView wCount;
 
 	private DatabaseService dbs;
 	private List<Integer> ids;
 
 	private boolean displayed;
+	private int wordsCount;
+	private int wordsPassCount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class WordActivity extends Activity {
 		id.setVisibility(View.GONE);
 		this.translation = (TextView) findViewById(R.id.wTranslation);
 		this.word = (TextView) findViewById(R.id.wWord);
+		this.wCount = (TextView) findViewById(R.id.wcount);
 
 		this.dbs = new DatabaseService(this);
 		//this.dbs.bouchon();
@@ -64,6 +68,8 @@ public class WordActivity extends Activity {
 	private void nextWord() {
 		if (ids == null || ids.size() == 0) {
 			this.ids = dbs.getWordsGerIds();
+			wordsCount = ids.size();
+			wordsPassCount = 0;
 			Collections.shuffle(ids);
 		}
 		Word w = null;
@@ -85,6 +91,9 @@ public class WordActivity extends Activity {
 		}
 		word.setVisibility(View.VISIBLE);
 		translation.setVisibility(View.GONE);
+		
+		wordsPassCount++;
+		wCount.setText(wordsPassCount+"/"+wordsCount);
 	}
 
 	private void displayTranslation() {

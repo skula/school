@@ -34,11 +34,14 @@ public class VerbActivity extends Activity {
 	private TextView vPresent;
 	private TextView vPreterite;
 	private TextView vPerfect;
+	private TextView vCount;
 
 	private DatabaseService dbs;
 	private List<Integer> ids;
 
 	private int clickType;
+	private int verbsCount;
+	private int verbsPassCount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class VerbActivity extends Activity {
 		this.vPresent = (TextView) findViewById(R.id.vpresent);
 		this.vPreterite = (TextView) findViewById(R.id.vpreterite);
 		this.vPerfect = (TextView) findViewById(R.id.vperfect);
+		this.vCount = (TextView) findViewById(R.id.vcount);
 
 		this.dbs = new DatabaseService(this);
 		//this.dbs.bouchon();
@@ -88,9 +92,12 @@ public class VerbActivity extends Activity {
 	private void nextVerb() {
 		if (ids == null || ids.size() == 0) {
 			this.ids = dbs.getVerbsGerIds();
+			verbsCount = ids.size();
+			verbsPassCount = 0;
 			Collections.shuffle(ids);
 		}
 
+		verbsPassCount++;;
 		Verb v = dbs.getVerbGer(String.valueOf(ids.remove(0)));
 		vId.setText(v.getId());
 		vTranslation.setText(v.getTranslation());
@@ -103,6 +110,7 @@ public class VerbActivity extends Activity {
 		vPreterite.setVisibility(View.GONE);
 		vPerfect.setText(v.getPerfect());
 		vPerfect.setVisibility(View.GONE);
+		vCount.setText(verbsPassCount+"/"+verbsCount);
 	}
 
 	@Override
