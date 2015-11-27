@@ -69,7 +69,7 @@ public class WordDialog extends Dialog implements OnClickListener {
 			String wo = word.getText().toString();
 			String t = translation.getText().toString();
 			if (!wo.isEmpty() && !t.isEmpty()) {
-				if(word==null){
+				if(w==null){
 					dbs.insertWord(wo, t, categoryId);
 				}else{
 					dbs.updateWord(w.getId(), wo, t);
