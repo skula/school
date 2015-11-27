@@ -33,10 +33,6 @@ public class DatabaseService {
 
 	public void bouchon() {
 		database.execSQL("DROP TABLE IF EXISTS wordGER");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_VERB_GERMAN);
-		database.execSQL("CREATE TABLE "
-				+ TABLE_VERB_GERMAN
-				+ "(id INTEGER PRIMARY KEY, infinitive TEXT, present TEXT, preterite TEXT, perfect TEXT, translation TEXT)");
 
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_WORD);
 		database.execSQL("CREATE TABLE " + TABLE_WORD
@@ -46,10 +42,9 @@ public class DatabaseService {
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
 		database.execSQL("CREATE TABLE " + TABLE_CATEGORY
 				+ "(id INTEGER PRIMARY KEY, label TEXT, language TEXT)");
-		//insertVerbGer(Verb.VERBS.get(0));
+
 		
-		
-		  for (Verb v : Verb.VERBS) { insertVerbGer(v); }
+		insertCategory("Divers", "allemand");
 		 
 	}
 

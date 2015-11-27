@@ -24,6 +24,8 @@ public class CategoryActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.category_layout);
 
+		this.language = getIntent().getExtras().getString("language");
+		
 		dbService = new DatabaseService(this);
 		itemList = (ListView) findViewById(R.id.category_list);
 		updateList();

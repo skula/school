@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.skula.school.R;
+import com.skula.school.services.DatabaseService;
 
 public class MainActivity extends Activity {
 
@@ -16,6 +17,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_layout);
 
+		// MOCK: bouchon
+		DatabaseService db = new DatabaseService(this);
+		//db.bouchon();
+		
 		Button btnVerben = (Button) findViewById(R.id.btn_verben);
 		btnVerben.setOnClickListener(new OnClickListener() {
 			@Override
@@ -24,12 +29,15 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
 		Button btnWords = (Button) findViewById(R.id.btn_words);
 		btnWords.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(v.getContext(), WordActivity.class);
+				Bundle mBundle = new Bundle();
+				mBundle.putString("language", "allemand");
+				Intent intent = new Intent(v.getContext(), CategoryActivity.class);
+				intent.putExtras(mBundle);
 				startActivity(intent);
 			}
 		});
