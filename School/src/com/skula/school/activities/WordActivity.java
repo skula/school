@@ -28,6 +28,7 @@ public class WordActivity extends Activity {
 
 	private DatabaseService dbs;
 	private List<Integer> ids;
+	private String categoryId;
 
 	private boolean displayed;
 	private int wordsCount;
@@ -67,14 +68,14 @@ public class WordActivity extends Activity {
 
 	private void nextWord() {
 		if (ids == null || ids.size() == 0) {
-			this.ids = dbs.getWordsGerIds();
+			this.ids = dbs.getWordsIds(categoryId);
 			wordsCount = ids.size();
 			wordsPassCount = 0;
 			Collections.shuffle(ids);
 		}
 		Word w = null;
 		try {
-			w = dbs.getWordGer(String.valueOf(ids.remove(0)));
+			w = dbs.getWord(String.valueOf(ids.remove(0)));
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -122,23 +123,23 @@ public class WordActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.add:
 			try{
-			ad = new WordDialog(this, dbs);
+			ad = new WordDialog(this, dbs, categoryId);
 			ad.show();
 			}catch(Exception e){
 				e.getMessage();
 			}
 			return true;
 		case R.id.modify:
-			ad = new WordDialog(this, dbs, dbs.getWordGer(id.getText().toString()));
+			ad = new WordDialog(this, dbs, dbs.getWord(id.getText().toString()), categoryId);
 			ad.show();
 			return true;
 		case R.id.remove:
-			dbs.deleteWordGer(id.getText().toString());
+			dbs.deleteWord(id.getText().toString());
 			this.ids = null;
 			nextWord();
 			return true;
 		case R.id.export:
-			FileCreator.writeFile("wordsGer", dbs.exportWordsGer());			
+			FileCreator.writeFile("wordsGer", dbs.exportWords());			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

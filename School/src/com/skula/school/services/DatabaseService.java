@@ -10,14 +10,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
+import com.skula.school.models.Category;
 import com.skula.school.models.Verb;
 import com.skula.school.models.Word;
 
 public class DatabaseService {
 	private static final String DATABASE_NAME = "school.db";
 	private static final int DATABASE_VERSION = 1;
-	private static final String TABLE_NAME_VERB_GERMAN = "verbGER";
-	private static final String TABLE_NAME_WORD_GERMAN = "wordGER";
+	private static final String TABLE_VERB_GERMAN = "verbGER";
+	private static final String TABLE_WORD = "word";
+	private static final String TABLE_CATEGORY = "category";
 
 	private Context context;
 	private SQLiteDatabase database;
@@ -30,15 +32,20 @@ public class DatabaseService {
 	}
 
 	public void bouchon() {
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_VERB_GERMAN);
+		database.execSQL("DROP TABLE IF EXISTS wordGER");
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_VERB_GERMAN);
 		database.execSQL("CREATE TABLE "
-				+ TABLE_NAME_VERB_GERMAN
-				+ "(id integer PRIMARY KEY, infinitive TEXT, present TEXT, preterite TEXT, perfect TEXT, translation TEXT)");
+				+ TABLE_VERB_GERMAN
+				+ "(id INTEGER PRIMARY KEY, infinitive TEXT, present TEXT, preterite TEXT, perfect TEXT, translation TEXT)");
 
-		/*database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_WORD_GERMAN);
-		database.execSQL("CREATE TABLE " + TABLE_NAME_WORD_GERMAN
-				+ "(id integer PRIMARY KEY, word TEXT, translation TEXT)");
-*/
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_WORD);
+		database.execSQL("CREATE TABLE " + TABLE_WORD
+				+ "(id INTEGER PRIMARY KEY, categoryid INTEGER, word TEXT, translation TEXT)");
+
+				
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
+		database.execSQL("CREATE TABLE " + TABLE_CATEGORY
+				+ "(id INTEGER PRIMARY KEY, label TEXT, language TEXT)");
 		//insertVerbGer(Verb.VERBS.get(0));
 		
 		
@@ -46,8 +53,11 @@ public class DatabaseService {
 		 
 	}
 
+	/*****************************************************/
+	/******************** VERBES *************************/
+	/*****************************************************/
 	public void insertVerbGer(Verb v) {
-		String sql = "insert into " + TABLE_NAME_VERB_GERMAN
+		String sql = "insert into " + TABLE_VERB_GERMAN
 				+ "(id, infinitive, present, preterite, perfect, translation) values (?,?,?,?,?,?)";
 		statement = database.compileStatement(sql);
 		statement.bindString(1, String.valueOf(getNextVerbGerId()));
@@ -60,7 +70,7 @@ public class DatabaseService {
 	}
 
 	public void insertVerbGer(String infinitive, String present, String preterite, String perfect, String translation) {
-		String sql = "insert into " + TABLE_NAME_VERB_GERMAN
+		String sql = "insert into " + TABLE_VERB_GERMAN
 				+ "(id, infinitive, present, preterite, perfect, translation) values (?,?,?,?,?,?)";
 		statement = database.compileStatement(sql);
 		statement.bindString(1, String.valueOf(getNextVerbGerId()));
@@ -79,19 +89,19 @@ public class DatabaseService {
 		args.put("preterite", preterite);
 		args.put("perfect", perfect);
 		args.put("translation", translation);
-		database.update(TABLE_NAME_VERB_GERMAN, args, "id=" + id, null);
+		database.update(TABLE_VERB_GERMAN, args, "id=" + id, null);
 	}
 
 	public void deleteAllVerbsGer() {
-		database.delete(TABLE_NAME_VERB_GERMAN, null, null);
+		database.delete(TABLE_VERB_GERMAN, null, null);
 	}
 
 	public void deleteVerbGer(String id) {
-		database.delete(TABLE_NAME_VERB_GERMAN, "id='" + id + "'", null);
+		database.delete(TABLE_VERB_GERMAN, "id='" + id + "'", null);
 	}
 
 	public Verb getVerbGer(String id) {
-		Cursor cursor = database.query(TABLE_NAME_VERB_GERMAN,
+		Cursor cursor = database.query(TABLE_VERB_GERMAN,
 				new String[] { "id, infinitive, present, preterite, perfect, translation" }, "id='" + id + "'", null,
 				null, null, null);
 		if (cursor.moveToFirst()) {
@@ -114,7 +124,7 @@ public class DatabaseService {
 
 	public List<Integer> getVerbsGerIds() {
 		List<Integer> res = new ArrayList<Integer>();
-		Cursor cursor = database.query(TABLE_NAME_VERB_GERMAN, new String[] { "id" }, null, null, null, null, null);
+		Cursor cursor = database.query(TABLE_VERB_GERMAN, new String[] { "id" }, null, null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				res.add(cursor.getInt(0));
@@ -128,7 +138,7 @@ public class DatabaseService {
 	
 	public List<List<String>> exportVerbGer() {
 		List<List<String>> res = new ArrayList<List<String>>();
-		Cursor cursor = database.query(TABLE_NAME_VERB_GERMAN,
+		Cursor cursor = database.query(TABLE_VERB_GERMAN,
 				new String[] { "id, infinitive, present, preterite, perfect, translation" }, null, null,
 				null, null, null);
 		if (cursor.moveToFirst()) {
@@ -148,7 +158,7 @@ public class DatabaseService {
 
 	public int getNextVerbGerId() {
 		Cursor cursor = database
-				.query(TABLE_NAME_VERB_GERMAN, new String[] { "max(id)" }, null, null, null, null, null);
+				.query(TABLE_VERB_GERMAN, new String[] { "max(id)" }, null, null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				return cursor.getInt(0) + 1;
@@ -160,32 +170,32 @@ public class DatabaseService {
 		return 1;
 	}
 
-	public void insertWordGer(String word, String translation) {
-		String sql = "insert into " + TABLE_NAME_WORD_GERMAN + "(id, word, translation) values (?,?,?)";
+	/*****************************************************/
+	/********************* MOTS **************************/
+	/*****************************************************/
+	public void insertWord(String word, String translation, String categoryId) {
+		String sql = "insert into " + TABLE_WORD + "(id, categoryid, word, translation) values (?,?,?,?)";
 		statement = database.compileStatement(sql);
-		statement.bindString(1, String.valueOf(getNextWordGerId()));
-		statement.bindString(2, word);
-		statement.bindString(3, translation);
+		statement.bindString(1, String.valueOf(getNextWordId()));
+		statement.bindString(2, categoryId);
+		statement.bindString(3, word);
+		statement.bindString(4, translation);
 		statement.executeInsert();
 	}
 	
-	public void updateWordGer(String id, String word, String translation) {
+	public void updateWord(String id, String word, String translation) {
 		ContentValues args = new ContentValues();
 		args.put("word", word);
 		args.put("translation", translation);
-		database.update(TABLE_NAME_WORD_GERMAN, args, "id=" + id, null);
+		database.update(TABLE_WORD, args, "id=" + id, null);
+	}
+	
+	public void deleteWord(String id) {
+		database.delete(TABLE_WORD, "id='" + id + "'", null);
 	}
 
-	public void deleteAllWordsGer() {
-		database.delete(TABLE_NAME_WORD_GERMAN, null, null);
-	}
-
-	public void deleteWordGer(String id) {
-		database.delete(TABLE_NAME_WORD_GERMAN, "id='" + id + "'", null);
-	}
-
-	public Word getWordGer(String id) {
-		Cursor cursor = database.query(TABLE_NAME_WORD_GERMAN, new String[] { "id, word, translation" }, "id='" + id
+	public Word getWord(String id) {
+		Cursor cursor = database.query(TABLE_WORD, new String[] { "id, word, translation" }, "id='" + id
 				+ "'", null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
@@ -198,9 +208,9 @@ public class DatabaseService {
 		return null;
 	}
 
-	public List<Integer> getWordsGerIds() {
+	public List<Integer> getWordsIds(String categoryId) {
 		List<Integer> res = new ArrayList<Integer>();
-		Cursor cursor = database.query(TABLE_NAME_WORD_GERMAN, new String[] { "id" }, null, null, null, null, null);
+		Cursor cursor = database.query(TABLE_WORD, new String[] { "id" }, "categoryid='" + categoryId + "'", null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				res.add(cursor.getInt(0));
@@ -212,9 +222,9 @@ public class DatabaseService {
 		return res;
 	}
 
-	public List<List<String>> exportWordsGer() {
+	public List<List<String>> exportWords() {
 		List<List<String>> res = new ArrayList<List<String>>();
-		Cursor cursor = database.query(TABLE_NAME_WORD_GERMAN,
+		Cursor cursor = database.query(TABLE_WORD,
 				new String[] { "id, word, translation" }, null, null,
 				null, null, null);
 		if (cursor.moveToFirst()) {
@@ -232,9 +242,9 @@ public class DatabaseService {
 		return res;
 	}
 	
-	public int getNextWordGerId() {
+	public int getNextWordId() {
 		Cursor cursor = database
-				.query(TABLE_NAME_WORD_GERMAN, new String[] { "max(id)" }, null, null, null, null, null);
+				.query(TABLE_WORD, new String[] { "max(id)" }, null, null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				return cursor.getInt(0) + 1;
@@ -246,24 +256,78 @@ public class DatabaseService {
 		return 1;
 	}
 
+	/*****************************************************/
+	/****************** CATEGORIES ***********************/
+	/*****************************************************/
+	public void insertCategory(String label, String language) {
+		String sql = "insert into " + TABLE_CATEGORY + "(id, label, language) values (?,?,?)";
+		statement = database.compileStatement(sql);
+		statement.bindString(1, String.valueOf(getNextCategoryId()));
+		statement.bindString(2, label);
+		statement.bindString(3, language);
+		statement.executeInsert();
+	}
+	
+	public void updateCategory(String id, String label) {
+		ContentValues args = new ContentValues();
+		args.put("label", label);
+		database.update(TABLE_CATEGORY, args, "id=" + id, null);
+	}
+
+	public void deleteCategory(String id) {
+		database.delete(TABLE_WORD, "categoryid='"+id+"'", null);
+		database.delete(TABLE_CATEGORY, "id='" + id + "'", null);
+	}
+
+	public List<Category> getCategories(String language) {
+		List<Category> res = new ArrayList<Category>();
+		Cursor cursor = database.query(TABLE_CATEGORY, new String[] { "id", "label", "language" }, "language='" + language + "'", null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				res.add(new Category(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return res;
+	}
+
+	public int getNextCategoryId() {
+		Cursor cursor = database
+				.query(TABLE_CATEGORY, new String[] { "max(id)" }, null, null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				return cursor.getInt(0) + 1;
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return 1;
+	}
+	
 	private static class OpenHelper extends SQLiteOpenHelper {
 		public OpenHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
 
 		@Override
-		public void onCreate(SQLiteDatabase db) {
-			db.execSQL("CREATE TABLE "
-					+ TABLE_NAME_VERB_GERMAN
+		public void onCreate(SQLiteDatabase database) {
+			database.execSQL("CREATE TABLE "
+					+ TABLE_VERB_GERMAN
 					+ "(id integer PRIMARY KEY, infinitive TEXT, present TEXT, preterite TEXT, perfect TEXT, translation TEXT)");
-			db.execSQL("CREATE TABLE " + TABLE_NAME_WORD_GERMAN
-					+ "(id integer PRIMARY KEY, word TEXT, translation TEXT)");
+			database.execSQL("CREATE TABLE " + TABLE_WORD
+					+ "(id integer PRIMARY KEY, categoryid INTEGER, word TEXT, translation TEXT)");
+			database.execSQL("CREATE TABLE " + TABLE_CATEGORY
+				+ "(id INTEGER PRIMARY KEY, label TEXT, language TEXT)");
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-			database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_VERB_GERMAN);
-			database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_WORD_GERMAN);
+			database.execSQL("DROP TABLE IF EXISTS " + TABLE_VERB_GERMAN);
+			database.execSQL("DROP TABLE IF EXISTS " + TABLE_WORD);
+			database.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
 			onCreate(database);
 		}
 	}

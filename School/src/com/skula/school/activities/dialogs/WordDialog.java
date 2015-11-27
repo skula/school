@@ -20,16 +20,19 @@ public class WordDialog extends Dialog implements OnClickListener {
 	private EditText word;
 	private EditText translation;
 	private Word w;
+	private String categoryId;
 
-	public WordDialog(Activity parentActivity, DatabaseService dbs) {
+	public WordDialog(Activity parentActivity, DatabaseService dbs, String categoryId) {
 		super(parentActivity);
 		this.dbs = dbs;
+		this.categoryId = categoryId;
 	}
 	
-	public WordDialog(Activity parentActivity, DatabaseService dbs, Word w) {
+	public WordDialog(Activity parentActivity, DatabaseService dbs, Word w, String categoryId) {
 		super(parentActivity);
 		this.dbs = dbs;
 		this.w =w;
+		this.categoryId = categoryId;
 	}
 
 	@Override
@@ -67,9 +70,9 @@ public class WordDialog extends Dialog implements OnClickListener {
 			String t = translation.getText().toString();
 			if (!wo.isEmpty() && !t.isEmpty()) {
 				if(word==null){
-					dbs.insertWordGer(wo, t);
+					dbs.insertWord(wo, t, categoryId);
 				}else{
-					dbs.updateWordGer(w.getId(), wo, t);
+					dbs.updateWord(w.getId(), wo, t);
 				}
 			}
 			dismiss();
