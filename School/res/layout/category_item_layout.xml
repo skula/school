@@ -9,12 +9,15 @@
         android:id="@+id/category_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="25sp" />
+        android:visibility="gone"/>
     
     <TextView
         android:id="@+id/category_label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="25sp" />
 
 </LinearLayout>

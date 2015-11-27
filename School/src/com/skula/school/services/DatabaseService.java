@@ -45,6 +45,7 @@ public class DatabaseService {
 
 		
 		insertCategory("Divers", "allemand");
+		insertWord("das Alter", "l'age", "1");
 		 
 	}
 

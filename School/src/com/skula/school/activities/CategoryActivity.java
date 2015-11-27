@@ -3,6 +3,7 @@ package com.skula.school.activities;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +33,12 @@ public class CategoryActivity extends Activity {
 
 		itemList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-
+				Category item = (Category) itemList.getItemAtPosition(position);
+				Bundle mBundle = new Bundle();
+				mBundle.putString("categoryid", item.getId());
+				Intent intent = new Intent(v.getContext(), WordActivity.class);
+				intent.putExtras(mBundle);
+				startActivity(intent);
 			}
 		});
 	}

@@ -39,6 +39,8 @@ public class WordActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.word_layout);
 
+		this.categoryId = getIntent().getExtras().getString("categoryid");
+		
 		this.id = (TextView) findViewById(R.id.wId);
 		id.setVisibility(View.GONE);
 		this.translation = (TextView) findViewById(R.id.wTranslation);
