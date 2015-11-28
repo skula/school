@@ -32,8 +32,6 @@ public class DatabaseService {
 	}
 
 	public void bouchon() {
-		database.execSQL("DROP TABLE IF EXISTS wordGER");
-
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_WORD);
 		database.execSQL("CREATE TABLE " + TABLE_WORD
 				+ "(id INTEGER PRIMARY KEY, categoryid INTEGER, word TEXT, translation TEXT)");
@@ -44,8 +42,8 @@ public class DatabaseService {
 				+ "(id INTEGER PRIMARY KEY, label TEXT, language TEXT)");
 
 		
-		insertCategory("Divers", "allemand");
-		insertWord("das Alter", "l'age", "1");
+		//insertCategory("Divers", "allemand");
+		//insertWord("das Alter", "l'age", "1");
 		 
 	}
 
@@ -264,10 +262,10 @@ public class DatabaseService {
 		statement.executeInsert();
 	}
 	
-	public void updateCategory(String id, String label) {
+	public void updateCategory(String oldLabel, String label) {
 		ContentValues args = new ContentValues();
 		args.put("label", label);
-		database.update(TABLE_CATEGORY, args, "id=" + id, null);
+		database.update(TABLE_CATEGORY, args, "label='" + oldLabel + "'", null);
 	}
 
 	public void deleteCategory(String id) {

@@ -40,7 +40,7 @@ public class WordActivity extends Activity {
 		setContentView(R.layout.word_layout);
 
 		this.categoryId = getIntent().getExtras().getString("categoryid");
-		
+
 		this.id = (TextView) findViewById(R.id.wId);
 		id.setVisibility(View.GONE);
 		this.translation = (TextView) findViewById(R.id.wTranslation);
@@ -48,7 +48,7 @@ public class WordActivity extends Activity {
 		this.wCount = (TextView) findViewById(R.id.wcount);
 
 		this.dbs = new DatabaseService(this);
-		//this.dbs.bouchon();
+		// this.dbs.bouchon();
 
 		nextWord();
 		this.displayed = false;
@@ -75,28 +75,26 @@ public class WordActivity extends Activity {
 			wordsPassCount = 0;
 			Collections.shuffle(ids);
 		}
-		Word w = null;
-		try {
+		if (ids.size() > 0) {
+			Word w = null;
 			w = dbs.getWord(String.valueOf(ids.remove(0)));
-		} catch (Exception e) {
-			e.getMessage();
+			id.setText(w.getId());
+			id.setVisibility(View.GONE);
+
+			Random r = new Random();
+			if (r.nextInt(10) % 2 == 0) {
+				translation.setText(w.getTranslation());
+				word.setText(w.getWord());
+			} else {
+				translation.setText(w.getWord());
+				word.setText(w.getTranslation());
+			}
+			word.setVisibility(View.VISIBLE);
+			translation.setVisibility(View.GONE);
+
+			wordsPassCount++;
+			wCount.setText(wordsPassCount + "/" + wordsCount);
 		}
-		id.setText(w.getId());
-		id.setVisibility(View.GONE);
-		
-		Random r = new Random();
-		if(r.nextInt(10)%2 == 0){
-			translation.setText(w.getTranslation());
-			word.setText(w.getWord());
-		}else{
-			translation.setText(w.getWord());
-			word.setText(w.getTranslation());
-		}
-		word.setVisibility(View.VISIBLE);
-		translation.setVisibility(View.GONE);
-		
-		wordsPassCount++;
-		wCount.setText(wordsPassCount+"/"+wordsCount);
 	}
 
 	private void displayTranslation() {
@@ -124,15 +122,16 @@ public class WordActivity extends Activity {
 		WordDialog ad;
 		switch (item.getItemId()) {
 		case R.id.add:
-			try{
-			ad = new WordDialog(this, dbs, categoryId);
-			ad.show();
-			}catch(Exception e){
+			try {
+				ad = new WordDialog(this, dbs, categoryId);
+				ad.show();
+			} catch (Exception e) {
 				e.getMessage();
 			}
 			return true;
 		case R.id.modify:
-			ad = new WordDialog(this, dbs, dbs.getWord(id.getText().toString()), categoryId);
+			ad = new WordDialog(this, dbs,
+					dbs.getWord(id.getText().toString()), categoryId);
 			ad.show();
 			return true;
 		case R.id.remove:
@@ -141,7 +140,7 @@ public class WordActivity extends Activity {
 			nextWord();
 			return true;
 		case R.id.export:
-			FileCreator.writeFile("wordsGer", dbs.exportWords());			
+			FileCreator.writeFile("wordsGer", dbs.exportWords());
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
