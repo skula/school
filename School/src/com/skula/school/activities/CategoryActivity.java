@@ -49,15 +49,11 @@ public class CategoryActivity extends Activity {
 		});
 	}
 
-	private void updateList() {
-		try {
-			List<Category> list = dbService.getCategories(language);
-			Category itemArray[] = (Category[]) list.toArray(new Category[list.size()]);
-			CategoryAdapter adapter = new CategoryAdapter(this, R.layout.category_item_layout, itemArray);
-			itemList.setAdapter(adapter);
-		} catch (Exception e) {
-			e.getMessage();
-		}
+	public void updateList() {
+		List<Category> list = dbService.getCategories(language);
+		Category itemArray[] = (Category[]) list.toArray(new Category[list.size()]);
+		CategoryAdapter adapter = new CategoryAdapter(this, R.layout.category_item_layout, itemArray);
+		itemList.setAdapter(adapter);
 	}
 
 	@Override
@@ -74,6 +70,10 @@ public class CategoryActivity extends Activity {
 		case R.id.add:
 			ad = new CategoryDialog(this, dbService);
 			ad.show();
+			return true;
+		case R.id.export:
+			FileCreator.writeFile("categories", dbService.exportCategories());		
+			FileCreator.writeFile("mots", dbService.exportWords());			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

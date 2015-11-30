@@ -139,9 +139,6 @@ public class WordActivity extends Activity {
 			this.ids = null;
 			nextWord();
 			return true;
-		case R.id.export:
-			FileCreator.writeFile("wordsGer", dbs.exportWords());
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -1,7 +1,6 @@
 package com.skula.school.activities.dialogs;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +8,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.skula.school.R;
-import com.skula.school.models.Word;
+import com.skula.school.activities.CategoryActivity;
 import com.skula.school.services.DatabaseService;
 
 public class CategoryDialog extends Dialog implements OnClickListener {
@@ -20,17 +20,20 @@ public class CategoryDialog extends Dialog implements OnClickListener {
 	private EditText title;
 	private String label;
 	private String categoryId;
+	private CategoryActivity parentActivity;
 
-	public CategoryDialog(Activity parentActivity, DatabaseService dbs) {
+	public CategoryDialog(CategoryActivity parentActivity, DatabaseService dbs) {
 		super(parentActivity);
 		this.dbs = dbs;
+		this.parentActivity = parentActivity;
 	}
 	
-	public CategoryDialog(Activity parentActivity, DatabaseService dbs, String label, String categoryId) {
+	public CategoryDialog(CategoryActivity parentActivity, DatabaseService dbs, String label, String categoryId) {
 		super(parentActivity);
 		this.dbs = dbs;
 		this.label = label;
 		this.categoryId = categoryId;
+		this.parentActivity = parentActivity;
 	}
 
 	@Override
@@ -66,8 +69,10 @@ public class CategoryDialog extends Dialog implements OnClickListener {
 			if (!t.isEmpty()) {
 				if(label==null){
 					dbs.insertCategory(t, "allemand");
+					parentActivity.updateList();
 				}else{
 					dbs.updateCategory(categoryId, t);
+					parentActivity.updateList();
 				}
 			}
 			dismiss();

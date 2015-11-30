@@ -5,5 +5,9 @@
         android:id="@+id/add"
         android:showAsAction="withText"
         android:title="Nouveau"/>
+    <item
+        android:id="@+id/export"
+        android:showAsAction="withText"
+        android:title="Exporter"/>
 
 </menu>

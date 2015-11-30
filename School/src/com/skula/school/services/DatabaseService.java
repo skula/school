@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
 import com.skula.school.models.Category;
+import com.skula.school.models.Data;
 import com.skula.school.models.Verb;
 import com.skula.school.models.Word;
 
@@ -42,8 +43,7 @@ public class DatabaseService {
 				+ "(id INTEGER PRIMARY KEY, label TEXT, language TEXT)");
 
 		
-		//insertCategory("Divers", "allemand");
-		//insertWord("das Alter", "l'age", "1");
+		Data.insert(this);
 		 
 	}
 
@@ -219,12 +219,12 @@ public class DatabaseService {
 	public List<List<String>> exportWords() {
 		List<List<String>> res = new ArrayList<List<String>>();
 		Cursor cursor = database.query(TABLE_WORD,
-				new String[] { "id, word, translation" }, null, null,
+				new String[] { "id, word, translation, categoryid" }, null, null,
 				null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				List<String> line= new ArrayList<String>();
-				for(int i = 0; i<3; i++){
+				for(int i = 0; i<4; i++){
 					line.add(cursor.getString(i));
 				}
 				res.add(line);
@@ -299,6 +299,26 @@ public class DatabaseService {
 			cursor.close();
 		}
 		return 1;
+	}
+	
+	public List<List<String>> exportCategories() {
+		List<List<String>> res = new ArrayList<List<String>>();
+		Cursor cursor = database.query(TABLE_CATEGORY,
+				new String[] { "id, label, language" }, null, null,
+				null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				List<String> line= new ArrayList<String>();
+				for(int i = 0; i<3; i++){
+					line.add(cursor.getString(i));
+				}
+				res.add(line);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return res;
 	}
 	
 	private static class OpenHelper extends SQLiteOpenHelper {
