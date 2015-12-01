@@ -215,6 +215,20 @@ public class DatabaseService {
 		}
 		return res;
 	}
+	
+		public List<Word> getWords(String categoryId) {
+		List<Word> res = new ArrayList<Word>();
+		Cursor cursor = database.query(TABLE_WORD, new String[] { "id, word, translation" }, "categoryid='" + categoryId + "'", null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				res.add(new Word(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		return res;
+	}
 
 	public List<List<String>> exportWords() {
 		List<List<String>> res = new ArrayList<List<String>>();

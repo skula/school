@@ -7,24 +7,31 @@ import java.util.Random;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.skula.school.R;
+import com.skula.school.activities.adapters.CategoryAdapter;
+import com.skula.school.activities.adapters.WordAdapter;
 import com.skula.school.activities.dialogs.WordDialog;
 import com.skula.school.models.Word;
 import com.skula.school.services.DatabaseService;
-import com.skula.school.utils.FileCreator;
 
 public class WordActivity extends Activity {
+	public static final int DISPLAY_LEARN = 0;
+	public static final int DISPLAY_CHECK = 1;
 	private TextView id;
 	private TextView translation;
 	private TextView word;
 	private TextView wCount;
+
+	private Menu menu;
+
+	private ListView wordList;
 
 	private DatabaseService dbs;
 	private List<Integer> ids;
@@ -34,6 +41,8 @@ public class WordActivity extends Activity {
 	private int wordsCount;
 	private int wordsPassCount;
 
+	private int typeUI;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,31 +50,57 @@ public class WordActivity extends Activity {
 
 		this.categoryId = getIntent().getExtras().getString("categoryid");
 
+		this.dbs = new DatabaseService(this);
+		// this.dbs.bouchon();
+
+		this.wordList = (ListView) findViewById(R.id.word_list);
 		this.id = (TextView) findViewById(R.id.wId);
-		id.setVisibility(View.GONE);
+		this.id.setVisibility(View.GONE);
 		this.translation = (TextView) findViewById(R.id.wTranslation);
 		this.word = (TextView) findViewById(R.id.wWord);
 		this.wCount = (TextView) findViewById(R.id.wcount);
 
-		this.dbs = new DatabaseService(this);
-		// this.dbs.bouchon();
+		this.typeUI = DISPLAY_LEARN;
+		initUI();
+	}
 
-		nextWord();
-		this.displayed = false;
-
-		LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout);
-		layout.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (isDisplayed()) {
-					nextWord();
-					setDisplayed(false);
-				} else {
-					displayTranslation();
-					setDisplayed(true);
+	private void initUI() {
+		if (typeUI == DISPLAY_CHECK) {
+			//setMenuItemTitle(R.id.typeUI, "Reciter");
+			wordList.setVisibility(View.GONE);
+			nextWord();
+			this.displayed = false;
+			LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout);
+			layout.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (isDisplayed()) {
+						nextWord();
+						setDisplayed(false);
+					} else {
+						displayTranslation();
+						setDisplayed(true);
+					}
 				}
-			}
-		});
+			});
+		} else {
+			ids = null;
+			
+			//setMenuItemTitle(R.id.typeUI, "Réviser");
+			//hideMenuItem(R.id.add);
+			//hideMenuItem(R.id.modify);
+			//hideMenuItem(R.id.remove);
+		
+			id.setVisibility(View.GONE);
+			translation.setVisibility(View.GONE);
+			word.setVisibility(View.GONE);
+
+			List<Word> list = dbs.getWords(categoryId);
+			list.size();
+			Word itemArray[] = (Word[]) list.toArray(new Word[list.size()]);
+			WordAdapter adapter = new WordAdapter(this, R.layout.word_item_layout, itemArray);
+			wordList.setAdapter(adapter);
+		}
 	}
 
 	private void nextWord() {
@@ -75,6 +110,7 @@ public class WordActivity extends Activity {
 			wordsPassCount = 0;
 			Collections.shuffle(ids);
 		}
+
 		if (ids.size() > 0) {
 			Word w = null;
 			w = dbs.getWord(String.valueOf(ids.remove(0)));
@@ -110,10 +146,18 @@ public class WordActivity extends Activity {
 		this.displayed = displayed;
 	}
 
+	private void hideMenuItem(int itemId) {
+		menu.findItem(itemId).setVisible(false);
+	}
+
+	private void setMenuItemTitle(int itemId, String title) {
+		menu.findItem(itemId).setTitle(title);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.verben, menu);
+		this.menu = menu;
+		getMenuInflater().inflate(R.menu.words, menu);
 		return true;
 	}
 
@@ -121,6 +165,10 @@ public class WordActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		WordDialog ad;
 		switch (item.getItemId()) {
+		case R.id.typeUI:
+			typeUI= typeUI==DISPLAY_LEARN?DISPLAY_CHECK:DISPLAY_LEARN;
+			initUI();
+			return true;
 		case R.id.add:
 			try {
 				ad = new WordDialog(this, dbs, categoryId);
