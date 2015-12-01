@@ -216,9 +216,9 @@ public class DatabaseService {
 		return res;
 	}
 	
-		public List<Word> getWords(String categoryId) {
+	public List<Word> getWords(String categoryId) {
 		List<Word> res = new ArrayList<Word>();
-		Cursor cursor = database.query(TABLE_WORD, new String[] { "id, word, translation" }, "categoryid='" + categoryId + "'", null, null, null, null);
+		Cursor cursor = database.query(TABLE_WORD, new String[] { "id, word, translation" }, "categoryid='" + categoryId + "'", null, null, null, "word asc");
 		if (cursor.moveToFirst()) {
 			do {
 				res.add(new Word(cursor.getString(0), cursor.getString(1), cursor.getString(2)));

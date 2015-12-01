@@ -9,7 +9,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.skula.school.R;
+import com.skula.school.activities.WordActivity;
 import com.skula.school.models.Word;
 import com.skula.school.services.DatabaseService;
 
@@ -17,22 +19,28 @@ public class WordDialog extends Dialog implements OnClickListener {
 	public DatabaseService dbs;
 	public Button btnCancel;
 	public Button btnSave;
+	public Button btnDelete;
 	private EditText word;
 	private EditText translation;
 	private Word w;
 	private String categoryId;
+	private boolean canDelete;
+	private WordActivity wordActivity;
 
-	public WordDialog(Activity parentActivity, DatabaseService dbs, String categoryId) {
+	public WordDialog(WordActivity parentActivity, DatabaseService dbs, String categoryId) {
 		super(parentActivity);
 		this.dbs = dbs;
 		this.categoryId = categoryId;
+		this.wordActivity = parentActivity;
 	}
 	
-	public WordDialog(Activity parentActivity, DatabaseService dbs, Word w, String categoryId) {
+	public WordDialog(WordActivity parentActivity, DatabaseService dbs, Word w, boolean canDelete) {
 		super(parentActivity);
+		this.wordActivity = parentActivity;
 		this.dbs = dbs;
 		this.w =w;
-		this.categoryId = categoryId;
+		this.categoryId = null;
+		this.canDelete = canDelete;
 	}
 
 	@Override
@@ -48,6 +56,11 @@ public class WordDialog extends Dialog implements OnClickListener {
 		btnCancel.setOnClickListener(this);
 		btnSave = (Button) findViewById(R.id.word_dial_btn_save);
 		btnSave.setOnClickListener(this);
+		btnDelete = (Button) findViewById(R.id.word_dial_btn_delete);
+		btnDelete.setOnClickListener(this);
+		if(!canDelete){
+			btnDelete.setVisibility(View.GONE);
+		}
 		
 		if(w==null){
 			btnSave.setText("Ajouter");
@@ -74,7 +87,13 @@ public class WordDialog extends Dialog implements OnClickListener {
 				}else{
 					dbs.updateWord(w.getId(), wo, t);
 				}
+				wordActivity.initUI();
+				dismiss();
 			}
+			break;
+		case R.id.word_dial_btn_delete:
+			dbs.deleteWord(w.getId());
+			wordActivity.initUI();
 			dismiss();
 			break;
 		default:

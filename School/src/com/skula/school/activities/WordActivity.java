@@ -10,12 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.skula.school.R;
-import com.skula.school.activities.adapters.CategoryAdapter;
 import com.skula.school.activities.adapters.WordAdapter;
 import com.skula.school.activities.dialogs.WordDialog;
 import com.skula.school.models.Word;
@@ -51,7 +52,6 @@ public class WordActivity extends Activity {
 		this.categoryId = getIntent().getExtras().getString("categoryid");
 
 		this.dbs = new DatabaseService(this);
-		// this.dbs.bouchon();
 
 		this.wordList = (ListView) findViewById(R.id.word_list);
 		this.id = (TextView) findViewById(R.id.wId);
@@ -64,9 +64,12 @@ public class WordActivity extends Activity {
 		initUI();
 	}
 
-	private void initUI() {
+	public void initUI() {
 		if (typeUI == DISPLAY_CHECK) {
-			//setMenuItemTitle(R.id.typeUI, "Reciter");
+			if(menu != null){
+				setMenuItemTitle(R.id.typeUI, "Réviser");
+				hideMenuItem(R.id.add);
+			}
 			wordList.setVisibility(View.GONE);
 			nextWord();
 			this.displayed = false;
@@ -86,21 +89,38 @@ public class WordActivity extends Activity {
 		} else {
 			ids = null;
 			
-			//setMenuItemTitle(R.id.typeUI, "Réviser");
-			//hideMenuItem(R.id.add);
-			//hideMenuItem(R.id.modify);
-			//hideMenuItem(R.id.remove);
+			if(menu != null){
+				setMenuItemTitle(R.id.typeUI, "Reciter");
+				showMenuItem(R.id.add);
+			}
 		
 			id.setVisibility(View.GONE);
 			translation.setVisibility(View.GONE);
 			word.setVisibility(View.GONE);
+			wordList.setVisibility(View.VISIBLE);
 
 			List<Word> list = dbs.getWords(categoryId);
 			list.size();
 			Word itemArray[] = (Word[]) list.toArray(new Word[list.size()]);
 			WordAdapter adapter = new WordAdapter(this, R.layout.word_item_layout, itemArray);
 			wordList.setAdapter(adapter);
+			
+			final WordActivity wa  = this;
+			wordList.setOnItemLongClickListener(new OnItemLongClickListener() {
+				@Override
+				public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
+					Word item = (Word) wordList.getItemAtPosition(position);
+					WordActivity wa = getActivity();
+					WordDialog ad = new WordDialog(wa, dbs, item, true);
+					ad.show();
+					return true;
+				}
+			});
 		}
+	}
+	
+	public WordActivity getActivity(){
+		return this;
 	}
 
 	private void nextWord() {
@@ -150,6 +170,10 @@ public class WordActivity extends Activity {
 		menu.findItem(itemId).setVisible(false);
 	}
 
+	private void showMenuItem(int itemId) {
+		menu.findItem(itemId).setVisible(true);
+	}
+
 	private void setMenuItemTitle(int itemId, String title) {
 		menu.findItem(itemId).setTitle(title);
 	}
@@ -170,16 +194,12 @@ public class WordActivity extends Activity {
 			initUI();
 			return true;
 		case R.id.add:
-			try {
-				ad = new WordDialog(this, dbs, categoryId);
-				ad.show();
-			} catch (Exception e) {
-				e.getMessage();
-			}
+			ad = new WordDialog(this, dbs, categoryId);
+			ad.show();
 			return true;
 		case R.id.modify:
 			ad = new WordDialog(this, dbs,
-					dbs.getWord(id.getText().toString()), categoryId);
+					dbs.getWord(id.getText().toString()), false);
 			ad.show();
 			return true;
 		case R.id.remove:

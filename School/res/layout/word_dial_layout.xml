@@ -64,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Annuler"
+            android:textSize="15dip" 
             android:textColor="#ffffff" />
 
         <Button
@@ -72,6 +73,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Ajouter"
+            android:textSize="15dip" 
+            android:textColor="#ffffff" />
+        <Button
+            android:id="@+id/word_dial_btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Supprimer"
+            android:textSize="15dip" 
             android:textColor="#ffffff" />
     </LinearLayout>
 
