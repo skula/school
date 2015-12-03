@@ -20,6 +20,7 @@ public class WordDialog extends Dialog implements OnClickListener {
 	public Button btnCancel;
 	public Button btnSave;
 	public Button btnDelete;
+	private EditText article;
 	private EditText word;
 	private EditText translation;
 	private Word w;
@@ -49,6 +50,7 @@ public class WordDialog extends Dialog implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.word_dial_layout);
 
+		article = (EditText) findViewById(R.id.word_dial_article);
 		word = (EditText) findViewById(R.id.word_dial_word);
 		translation = (EditText) findViewById(R.id.word_dial_translation);
 
@@ -66,6 +68,7 @@ public class WordDialog extends Dialog implements OnClickListener {
 			btnSave.setText("Ajouter");
 		}else{
 			btnSave.setText("Modifier");
+			article.setText(w.getArticle());
 			word.setText(w.getWord());
 			translation.setText(w.getTranslation());
 		}
@@ -79,13 +82,14 @@ public class WordDialog extends Dialog implements OnClickListener {
 			dismiss();
 			break;
 		case R.id.word_dial_btn_save:
+			String art = article.getText().toString();
 			String wo = word.getText().toString();
-			String t = translation.getText().toString();
-			if (!wo.isEmpty() && !t.isEmpty()) {
+			String trans = translation.getText().toString();
+			if (!wo.isEmpty() && !trans.isEmpty()) {
 				if(w==null){
-					dbs.insertWord(wo, t, categoryId);
+					dbs.insertWord(art, wo, trans, categoryId);
 				}else{
-					dbs.updateWord(w.getId(), wo, t);
+					dbs.updateWord(w.getId(), art, wo, trans);
 				}
 				wordActivity.initUI();
 				dismiss();

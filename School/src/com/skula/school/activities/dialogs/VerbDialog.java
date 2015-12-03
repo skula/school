@@ -24,11 +24,13 @@ public class VerbDialog extends Dialog implements OnClickListener {
 	private EditText perfect;
 	private EditText translation;
 	private Verb verb;
+	private String languageId;
 
-	public VerbDialog(Activity parentActivity, DatabaseService dbs) {
+	public VerbDialog(Activity parentActivity, DatabaseService dbs, String languageId) {
 		super(parentActivity);
 		this.dbs = dbs;
 		this.verb = null;
+		this.languageId = languageId;
 	}
 	
 	public VerbDialog(Activity parentActivity, DatabaseService dbs, Verb verb) {
@@ -74,16 +76,16 @@ public class VerbDialog extends Dialog implements OnClickListener {
 			dismiss();
 			break;
 		case R.id.verb_dial_btn_save:
-			String i = infinitive.getText().toString();
+			String inf = infinitive.getText().toString();
 			String pres = present.getText().toString();
 			String pret = preterite.getText().toString();
 			String perf = perfect.getText().toString();
-			String t = translation.getText().toString();
-			if (!i.isEmpty() && !pres.isEmpty() && !pret.isEmpty() && !perf.isEmpty() && !t.isEmpty()) {
+			String trans = translation.getText().toString();
+			if (!inf.isEmpty() && !pres.isEmpty() && !pret.isEmpty() && !perf.isEmpty() && !trans.isEmpty()) {
 				if(verb == null){
-					dbs.insertVerbGer(i, pres, pret, perf, t);
+					dbs.insertVerb(inf, pres, pret, perf, trans, languageId);
 				}else{
-					dbs.updateVerbGer(verb.getId(), i, pres, pret, perf, t);
+					dbs.updateVerb(verb.getId(), inf, pres, pret, perf, trans);
 				}
 			}
 			dismiss();

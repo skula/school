@@ -42,12 +42,16 @@ public class VerbActivity extends Activity {
 	private int clickType;
 	private int verbsCount;
 	private int verbsPassCount;
+	
+	private String languageId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.verb_layout);
 
+		this.languageId = getIntent().getExtras().getString("languageid");
+		
 		this.vId = (TextView) findViewById(R.id.vid);
 		vId.setVisibility(View.GONE);
 		this.vTranslation = (TextView) findViewById(R.id.vtranslation);
@@ -58,7 +62,6 @@ public class VerbActivity extends Activity {
 		this.vCount = (TextView) findViewById(R.id.vcount);
 
 		this.dbs = new DatabaseService(this);
-		//this.dbs.bouchon();
 
 		nextVerb();
 		this.clickType = CLICK_WORD;
@@ -91,14 +94,14 @@ public class VerbActivity extends Activity {
 
 	private void nextVerb() {
 		if (ids == null || ids.size() == 0) {
-			this.ids = dbs.getVerbsGerIds();
+			this.ids = dbs.getVerbsIds(languageId);
 			verbsCount = ids.size();
 			verbsPassCount = 0;
 			Collections.shuffle(ids);
 		}
 
 		verbsPassCount++;;
-		Verb v = dbs.getVerbGer(String.valueOf(ids.remove(0)));
+		Verb v = dbs.getVerb(String.valueOf(ids.remove(0)));
 		vId.setText(v.getId());
 		vTranslation.setText(v.getTranslation());
 		vTranslation.setVisibility(View.VISIBLE);
@@ -125,20 +128,20 @@ public class VerbActivity extends Activity {
 		VerbDialog ad;
 		switch (item.getItemId()) {
 		case R.id.add:
-			ad = new VerbDialog(this, dbs);
+			ad = new VerbDialog(this, dbs, languageId);
 			ad.show();
 			return true;
 		case R.id.modify:
-			ad = new VerbDialog(this, dbs, dbs.getVerbGer(vId.getText().toString()));
+			ad = new VerbDialog(this, dbs, dbs.getVerb(vId.getText().toString()));
 			ad.show();
 			return true;
 		case R.id.remove:
-			dbs.deleteVerbGer(vId.getText().toString());
+			dbs.deleteVerb(vId.getText().toString());
 			this.ids = null;
 			nextVerb();
 			return true;
 		case R.id.export:
-			FileCreator.writeFile("verbsGer", dbs.exportVerbGer());			
+			FileCreator.writeFile("verbs", dbs.exportVerb(languageId));			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -34,7 +34,12 @@ public class WordAdapter extends ArrayAdapter<Word> {
 		TextView id = (TextView) rowView.findViewById(R.id.word_item_id);
 		id.setText(w.getId());	
 		TextView word = (TextView) rowView.findViewById(R.id.word_item_word);
-		word.setText(w.getWord());
+		String article = w.getArticle();
+		if(article.isEmpty()){
+			word.setText(w.getWord());
+		}else{
+			word.setText(article + " " + w.getWord());
+		}
 		TextView translation = (TextView) rowView.findViewById(R.id.word_item_translation);
 		translation.setText(w.getTranslation());
 		

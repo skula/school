@@ -138,11 +138,19 @@ public class WordActivity extends Activity {
 			id.setVisibility(View.GONE);
 
 			Random r = new Random();
+			
+			String value = "";
+			if(w.getArticle().isEmpty()){
+				value = w.getWord();
+			}else{
+				value = w.getArticle() + " " + w.getWord();
+			}
+			
 			if (r.nextInt(10) % 2 == 0) {
 				translation.setText(w.getTranslation());
-				word.setText(w.getWord());
+				word.setText(value);
 			} else {
-				translation.setText(w.getWord());
+				translation.setText(value);
 				word.setText(w.getTranslation());
 			}
 			word.setVisibility(View.VISIBLE);

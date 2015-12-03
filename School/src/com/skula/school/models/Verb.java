@@ -1,6 +1,5 @@
 package com.skula.school.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Verb {
@@ -10,33 +9,21 @@ public class Verb {
 	private String preterite;
 	private String perfect;
 	private String translation;
+	private String languageId;
 	public static List<Verb> VERBS;
-
-	static {
-		int cpt = 1;
-		VERBS = new ArrayList<Verb>();
-		VERBS.add(new Verb(String.valueOf(cpt++), "anbieten", "bietet an", "bot an", "hat angeboten", "offrir, proposer"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "anfangen", "fängt an", "fing an", "hat angefangen", "commencer"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "anziehen", "zieht an", "zog an", "hat angezogen", "mettre (vêtement)"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "aufgeben", "gibt auf", "gab auf", "hat aufgegeben", "abandonner"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "ausblasen", "bläst aus", "blies aus", "hat ausgeblasen", "souffler (bougie)"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "ausgeben", "gibt aus", "gab aus", "hat ausgegeben", "dépenser (argent)"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "aussehen", "sieht aus", "sah aus", "hat ausgesehen", "avoir l'air"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "ausziehen", "zieht aus", "zog aus", "hat ausgezogen", "enlever (vêtement)"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "ausziehen", "zieht aus", "zog aus", "ist ausgezogen", "déménager"));
-		VERBS.add(new Verb(String.valueOf(cpt++), "backen", "bäckt", "backte / buk", "hat gebacken", "faire cuire au four(pâtisserie)"));
-	}
 
 	public Verb() {
 	}
-	
-	public Verb(String id, String infinitive, String present, String preterite, String perfect, String translation) {
+
+	public Verb(String id, String infinitive, String present, String preterite, String perfect, String translation,
+			String languageId) {
 		this.id = id;
 		this.infinitive = infinitive;
 		this.present = present;
 		this.preterite = preterite;
 		this.perfect = perfect;
 		this.translation = translation;
+		this.languageId = languageId;
 	}
 
 	public String getId() {
@@ -85,5 +72,13 @@ public class Verb {
 
 	public void setTranslation(String translation) {
 		this.translation = translation;
+	}
+
+	public String getLanguage() {
+		return languageId;
+	}
+
+	public void setLanguage(String languageId) {
+		this.languageId = languageId;
 	}
 }

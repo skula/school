@@ -24,14 +24,14 @@ import com.skula.school.utils.FileCreator;
 public class CategoryActivity extends Activity {
 	private ListView itemList;
 	private DatabaseService dbService;
-	private String language;
+	private String languageId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.category_layout);
 
-		this.language = getIntent().getExtras().getString("language");
+		this.languageId = getIntent().getExtras().getString("languageid");
 		
 		dbService = new DatabaseService(this);
 		itemList = (ListView) findViewById(R.id.category_list);
@@ -50,7 +50,7 @@ public class CategoryActivity extends Activity {
 	}
 
 	public void updateList() {
-		List<Category> list = dbService.getCategories(language);
+		List<Category> list = dbService.getCategories(languageId);
 		Category itemArray[] = (Category[]) list.toArray(new Category[list.size()]);
 		CategoryAdapter adapter = new CategoryAdapter(this, R.layout.category_item_layout, itemArray);
 		itemList.setAdapter(adapter);

@@ -11,21 +11,37 @@ import com.skula.school.R;
 import com.skula.school.services.DatabaseService;
 
 public class MainActivity extends Activity {
-
+	private DatabaseService db;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_layout);
 
-		// MOCK: bouchon
-		DatabaseService db = new DatabaseService(this);
-		//db.bouchon();
-		
-		Button btnVerben = (Button) findViewById(R.id.btn_verben);
-		btnVerben.setOnClickListener(new OnClickListener() {
+		this.db = new DatabaseService(this);
+		// MOCK
+		// db.bouchon();
+
+		Button btnVerbsEng = (Button) findViewById(R.id.btn_verbs_eng);
+		btnVerbsEng.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Bundle mBundle = new Bundle();
+				mBundle.putString("languageid", db.getLanguageId("ENG"));
 				Intent intent = new Intent(v.getContext(), VerbActivity.class);
+				intent.putExtras(mBundle);
+				startActivity(intent);
+			}
+		});
+
+		Button btnVerbsGer = (Button) findViewById(R.id.btn_verbs_ger);
+		btnVerbsGer.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Bundle mBundle = new Bundle();
+				mBundle.putString("languageid", db.getLanguageId("GER"));
+				Intent intent = new Intent(v.getContext(), VerbActivity.class);
+				intent.putExtras(mBundle);
 				startActivity(intent);
 			}
 		});
@@ -35,7 +51,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Bundle mBundle = new Bundle();
-				mBundle.putString("language", "allemand");
+				mBundle.putString("languageid", "GER");
 				Intent intent = new Intent(v.getContext(), CategoryActivity.class);
 				intent.putExtras(mBundle);
 				startActivity(intent);
