@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 
 		this.db = new DatabaseService(this);
 		// MOCK
-		// db.bouchon();
+		//db.bouchon();
 
 		Button btnVerbsEng = (Button) findViewById(R.id.btn_verbs_eng);
 		btnVerbsEng.setOnClickListener(new OnClickListener() {
@@ -46,12 +46,24 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		Button btnWords = (Button) findViewById(R.id.btn_words);
-		btnWords.setOnClickListener(new OnClickListener() {
+		Button btnWordsGer = (Button) findViewById(R.id.btn_words_ger);
+		btnWordsGer.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Bundle mBundle = new Bundle();
-				mBundle.putString("languageid", "GER");
+				mBundle.putString("languageid", db.getLanguageId("GER"));
+				Intent intent = new Intent(v.getContext(), CategoryActivity.class);
+				intent.putExtras(mBundle);
+				startActivity(intent);
+			}
+		});
+
+		Button btnWordsEng = (Button) findViewById(R.id.btn_words_eng);
+		btnWordsEng.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Bundle mBundle = new Bundle();
+				mBundle.putString("languageid", db.getLanguageId("ENG"));
 				Intent intent = new Intent(v.getContext(), CategoryActivity.class);
 				intent.putExtras(mBundle);
 				startActivity(intent);

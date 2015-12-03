@@ -80,6 +80,7 @@ public class DatabaseService {
 				null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
+				String res = cursor.getString(0);
 				return cursor.getString(0);
 			} while (cursor.moveToNext());
 		}
@@ -197,7 +198,7 @@ public class DatabaseService {
 
 	public String insertVerb(String infinitive, String present, String preterite, String perfect, String translation, String languageId) {
 		String sql = "insert into " + TABLE_VERB
-				+ "(id, infinitive, present, preterite, perfect, translation, language) values (?,?,?,?,?,?,?)";
+				+ "(id, infinitive, present, preterite, perfect, translation, languageid) values (?,?,?,?,?,?,?)";
 		String id = String.valueOf(getNextVerbId());
 		statement = database.compileStatement(sql);
 		statement.bindString(1, id);

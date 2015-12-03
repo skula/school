@@ -77,7 +77,7 @@ public class Data {
 		dbs.insertWord("", "au$erdem", "en outre", categoryId);
 		dbs.insertWord("", "danach", "ensuite", categoryId);
 		dbs.insertWord("", "deshalb", "pour cette raison, c'est pourquoi", categoryId);
-		dbs.insertWord("", "folglich", "par consÃ©quent", categoryId);
+		dbs.insertWord("", "folglich", "par conséuent", categoryId);
 		dbs.insertWord("", "schlie$lich", "finalement, après tout", categoryId);
 		dbs.insertWord("", "trotzdem", "malgré tout", categoryId);
 		dbs.insertWord("", "zuvor", "auparavant, avant", categoryId);
@@ -230,7 +230,7 @@ public class Data {
 		dbs.insertWord("", "grau", "gris", categoryId);
 		dbs.insertWord("", "gro$", "grand", categoryId);
 		dbs.insertWord("", "gut", "bien, bon", categoryId);
-		dbs.insertWord("", "das Haar (e)", "le(s) cheveu(x)", categoryId);
+		dbs.insertWord("das", "Haar (e)", "le(s) cheveu(x)", categoryId);
 		dbs.insertWord("", "hart", "dur", categoryId);
 		dbs.insertWord("", "hässlich", "laid", categoryId);
 		dbs.insertWord("", "hell", "clair", categoryId);
@@ -271,7 +271,7 @@ public class Data {
 		dbs.insertWord("", "selbstsicher", "sûr de soi", categoryId);
 		dbs.insertWord("", "sportlich", "sportif", categoryId);
 		dbs.insertWord("", "stark", "fort", categoryId);
-		dbs.insertWord("", "der Steckbrief (e)", "(ici) la fiche signalétique", categoryId);
+		dbs.insertWord("der", "Steckbrief (e)", "(ici) la fiche signalétique", categoryId);
 		dbs.insertWord("", "stolz", "fier", categoryId);
 		dbs.insertWord("", "streng", "sévère", categoryId);
 		dbs.insertWord("", "sü$", "mignon, gentil, touchant", categoryId);
@@ -283,7 +283,7 @@ public class Data {
 		dbs.insertWord("", "vergesslich", "oublieux, distrait", categoryId);
 		dbs.insertWord("", "vernünftig", "raisonnable", categoryId);
 		dbs.insertWord("", "verständnisvoll", "compréhensif", categoryId);
-		dbs.insertWord("", "das Vorbild (er)", "le modèle", categoryId);
+		dbs.insertWord("das", "Vorbild (er)", "le modèle", categoryId);
 		dbs.insertWord("", "vorsichtig", "prudent", categoryId);
 		dbs.insertWord("", "weich", "sensible", categoryId);
 		dbs.insertWord("", "wei$", "blanc", categoryId);

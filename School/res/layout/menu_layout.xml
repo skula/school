@@ -21,10 +21,17 @@
         android:text="Verbes irreguliers allemands" />
 
     <Button
-        android:id="@+id/btn_words"
+        android:id="@+id/btn_words_ger"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Vocabulaire allemand" />
+
+    <Button
+        android:id="@+id/btn_words_eng"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Vocabulaire anglais" />
 
 </LinearLayout>
