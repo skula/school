@@ -12,7 +12,7 @@
         android:layout_marginTop="5dp"
         android:layout_gravity="center_horizontal"
         android:text="Verbes irreguliers anglais" />
-    <Button
+    <!-- <Button
         android:id="@+id/btn_verbs_ger"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Vocabulaire allemand" />
+        android:text="Vocabulaire allemand" />-->
 
     <Button
         android:id="@+id/btn_words_eng"

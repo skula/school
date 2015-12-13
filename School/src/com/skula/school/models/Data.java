@@ -6,7 +6,7 @@ public class Data {
 	public static void insert(DatabaseService dbs) {
 		String categoryId = "";
 		String languageId = "";
-		languageId = dbs.insertLanguage("GER");
+		/*languageId = dbs.insertLanguage("GER");
 		dbs.insertVerb("anbieten", "bietet an", "bot an", "hat angeboten", "offrir, proposer", languageId);
 		dbs.insertVerb("anfangen", "fängt an", "fing an", "hat angefangen", "commencer", languageId);
 		dbs.insertVerb("anziehen", "zieht an", "zog an", "hat angezogen", "mettre (vêtement)", languageId);
@@ -289,7 +289,7 @@ public class Data {
 		dbs.insertWord("", "wei$", "blanc", categoryId);
 		dbs.insertWord("", "witzig", "drôle", categoryId);
 		dbs.insertWord("", "zufrieden", "satisfait, content", categoryId);
-		dbs.insertWord("", "zuverlässig", "fiable", categoryId);
+		dbs.insertWord("", "zuverlässig", "fiable", categoryId);*/
 
 		languageId = dbs.insertLanguage("ENG");
 		dbs.insertVerb("abide", "abide", "abode", "abode", "respecter / se conformer à", languageId);

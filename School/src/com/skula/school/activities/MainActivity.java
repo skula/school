@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		Button btnVerbsGer = (Button) findViewById(R.id.btn_verbs_ger);
+		/*Button btnVerbsGer = (Button) findViewById(R.id.btn_verbs_ger);
 		btnVerbsGer.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 				intent.putExtras(mBundle);
 				startActivity(intent);
 			}
-		});
+		});*/
 
 		Button btnWordsEng = (Button) findViewById(R.id.btn_words_eng);
 		btnWordsEng.setOnClickListener(new OnClickListener() {
