@@ -9,7 +9,7 @@ public class Braille {
 
 	static {
 		CHARACTERS = new HashMap<String, int[]>();
-		CHARACTERS.put("A", new int[] { 1, 0, 0, 0, 0, 0 });// 1
+		/*CHARACTERS.put("A", new int[] { 1, 0, 0, 0, 0, 0 });// 1
 		CHARACTERS.put("B", new int[] { 1, 1, 0, 0, 0, 0 }); // 1, 2
 		CHARACTERS.put("C", new int[] { 1, 0, 0, 1, 0, 0 }); // 1, 4
 		CHARACTERS.put("D", new int[] { 1, 0, 0, 1, 1, 0 }); // 1, 4,5
@@ -29,11 +29,11 @@ public class Braille {
 		CHARACTERS.put("R", new int[] { 1, 1, 1, 0, 1, 0 });// 1,2,3,5});
 		CHARACTERS.put("S", new int[] { 0, 1, 1, 1, 0, 0 });// 2,3,4});
 		CHARACTERS.put("T", new int[] { 0, 1, 1, 1, 1, 0 });// 2,3,4,5});
-		CHARACTERS.put("U", new int[] { 1, 0, 1, 0, 0, 1 });// 1,3,6});
+		*/CHARACTERS.put("U", new int[] { 1, 0, 1, 0, 0, 1 });// 1,3,6});
 		CHARACTERS.put("V", new int[] { 1, 1, 1, 0, 0, 1 });// 1,2,3,6});
 		CHARACTERS.put("W", new int[] { 0, 1, 0, 1, 1, 1 });// 2,4,5,6});
 		CHARACTERS.put("X", new int[] { 1, 0, 1, 1, 0, 1 });// 1,3,4,6});
-		CHARACTERS.put("Y", new int[] { 1, 0, 1, 1, 1, 1 });// 1,3,4,5,6});
+		/*CHARACTERS.put("Y", new int[] { 1, 0, 1, 1, 1, 1 });// 1,3,4,5,6});
 		CHARACTERS.put("Z", new int[] { 1, 0, 1, 0, 1, 1 });// 1,3,5,6});
 
 		CHARACTERS.put("0", new int[] { 0, 1, 0, 1, 1, 0 });// 2,4,5});
@@ -53,6 +53,6 @@ public class Braille {
 		CHARACTERS.put(",", new int[] { 0, 1, 0, 0, 0, 0 });// 2,4});
 		CHARACTERS.put("-", new int[] { 0, 0, 1, 0, 0, 1 });// 2,4});
 		CHARACTERS.put(".", new int[] { 0, 1, 0, 0, 1, 1 });// 2,4});
-		CHARACTERS.put("?", new int[] { 0, 1, 1, 0, 0, 1 });// 2,4});
+		CHARACTERS.put("?", new int[] { 0, 1, 1, 0, 0, 1 });// 2,4});*/
 	}
 }
