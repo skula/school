@@ -78,5 +78,14 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+
+		Button btnMorse = (Button) findViewById(R.id.btn_morse);
+		btnMorse.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {				
+				Intent intent = new Intent(v.getContext(), MorseActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 }

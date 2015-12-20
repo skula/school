@@ -39,5 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Braille" />
+    <Button
+        android:id="@+id/btn_morse"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Morse" />
 
 </LinearLayout>
